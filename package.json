@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build && node scripts/wrap-worker.mjs",
+    "build": "vinext build && node scripts/bundle-worker.mjs && node scripts/wrap-worker.mjs",
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit",
