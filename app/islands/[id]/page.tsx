@@ -8,7 +8,6 @@ import { SiteFooter, SiteHeader } from "../../site-chrome";
 import { islandSpecialties } from "../../island-specialties";
 
 type Island = (typeof islandData.islands)[number];
-export const dynamic = "force-dynamic";
 
 const dateTime = (value?: string | null) => value
   ? new Intl.DateTimeFormat("ja-JP", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Tokyo" }).format(new Date(value))

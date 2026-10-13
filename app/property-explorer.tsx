@@ -1,8 +1,8 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import islandData from "./islands_top50.json";
 import { safePropertyTitle, sanitizeIslandName, sanitizeTransit } from "./property-normalization";
 import { TileIslandMap } from "./tile-island-map";
@@ -82,7 +82,6 @@ function IslandCard({ island, propertyCount, searchStatus }: { island: Island; p
 
 export function PropertyExplorer({ payload, initialIslandId, initialPropertyQuery = "", initialView = "home" }: { payload: PropertyPayload; initialIslandId?: string; initialPropertyQuery?: string; initialView?: View }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const islands = islandData.islands;
   const validInitialIslandId = initialIslandId && islands.some((island) => island.id === initialIslandId) ? initialIslandId : undefined;
   const view: View = validInitialIslandId ? "properties" : initialView;
@@ -94,12 +93,21 @@ export function PropertyExplorer({ payload, initialIslandId, initialPropertyQuer
   const [propertyLayout, setPropertyLayout] = useState("");
   const [minimumArea, setMinimumArea] = useState("all");
   const [propertyLimit, setPropertyLimit] = useState(30);
-  const initialPropertySort = searchParams.get("sort") || "default";
-  const [propertySort, setPropertySort] = useState(propertySortValues.has(initialPropertySort) ? initialPropertySort : "default");
+  const [propertySort, setPropertySort] = useState("default");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const island = params.get("island");
+    if (island && islands.some((item) => item.id === island)) setPropertyIsland(island);
+    const query = params.get("query");
+    if (query) setPropertyQuery(query);
+    const sortValue = params.get("sort");
+    if (sortValue && propertySortValues.has(sortValue)) setPropertySort(sortValue);
+  }, [islands]);
 
   const changePropertySort = (value: string) => {
     setPropertySort(value);
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(window.location.search);
     if (value === "default") params.delete("sort"); else params.set("sort", value);
     router.replace(params.size ? `?${params.toString()}` : "/properties", { scroll: false });
   };

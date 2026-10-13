@@ -2,6 +2,7 @@ node_modules/
 .next/
 .vinext/
 dist/
+out/
 *.log
 *.tsbuildinfo
 .env*
