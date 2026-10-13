@@ -1,4 +1,4 @@
-import { cp, rm } from "node:fs/promises";
+import { rename, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { build } from "vite";
 
@@ -23,5 +23,5 @@ await build({
   },
 });
 
-await cp(output, resolve(root, "dist/server"), { recursive: true, force: true });
-await rm(output, { recursive: true, force: true });
+await rm(resolve(root, "dist/server"), { recursive: true, force: true });
+await rename(output, resolve(root, "dist/server"));
