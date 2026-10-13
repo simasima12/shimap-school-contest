@@ -8,6 +8,7 @@ const output = resolve(root, "dist/server-rebundle");
 await build({
   configFile: false,
   define: {
+    "import.meta.url": JSON.stringify("file:///index.js"),
     "import.meta.filename": JSON.stringify("/index.js"),
     "import.meta.dirname": JSON.stringify("/"),
   },
