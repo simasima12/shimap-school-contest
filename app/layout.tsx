@@ -1,7 +1,10 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import { siteDescription, siteTitle } from "./site-config";
+
+const publicBasePath = process.env.GITHUB_ACTIONS === "true" ? "/shimap-school-contest" : "";
 
 export const metadata: Metadata = {
   title: {
@@ -43,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body>
+      <body style={{ "--hero-image": `url("${publicBasePath}/og-image.jpg")` } as CSSProperties}>
         <a className="skip-link" href="#main-content">本文へ移動</a>
         {children}
       </body>
