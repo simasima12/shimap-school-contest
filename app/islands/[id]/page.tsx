@@ -66,7 +66,7 @@ export default async function IslandPage({ params }: { params: Promise<{ id: str
         {specialties.length > 0 && <section><h2>特産品・名物</h2><ul className="specialty-list">{specialties.map((item) => <li key={item.name}>{item.name}<a href={item.sourceUrl} target="_blank" rel="noreferrer">出典：{item.sourceName}</a></li>)}</ul></section>}</div>
       <p className="data-status">アクセス方法や施設情報は変更される場合があります。利用前に自治体・交通事業者・施設の公式情報をご確認ください。<Link href="/data#island-source">島データ・出典を見る</Link></p>
       <section className="island-property-summary"><h2>{island.name}の賃貸物件</h2><p>最終取得：{dateTime(status?.checkedAt || payload.generatedAt)}</p>
-        <div className="hero-actions"><a className="button primary" href={`/properties?island=${island.id}`}>物件検索で確認する</a>
+        <div className="hero-actions"><Link className="button primary" href={`/properties?island=${island.id}`}>物件検索で確認する</Link>
           <a className="button ghost" href={island.routeUrl} target="_blank" rel="noreferrer">Google Mapsで経路を見る</a></div></section>
       <div className="tag-cloud">{island.tags.map((item) => <span className="tag-badge" key={item}>{item}</span>)}</div>
       <nav className="island-pagination" aria-label="前後の島">
